@@ -1,0 +1,25 @@
+{
+  "name": "covid",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@takiyo/covid-scrapper": "^1.0.1",
+    "asciichart": "^1.5.25",
+    "axios": "^0.27.2",
+    "boxen": "^7.0.0",
+    "boxen-cli": "^4.0.0",
+    "cli-box": "^6.0.10",
+    "cli-boxes": "^3.0.0",
+    "cli-diagram": "^0.3.0",
+    "cli-pie": "^2.4.2",
+    "ervy": "^1.0.7",
+    "loading-cli": "^1.1.0"
+  }
+}
