@@ -3,14 +3,15 @@
     const Pie = require("cli-pie");
     const Diagram = require("cli-diagram");
     const Loading = require("loading-cli");
+    const Interact = require("cli-interact");
 
     const perintah = process.argv[2];
-    let negara = process.argv.splice(3).join(" ").trim() ?? "all";
 
     if (!perintah) return console.log("Perintah yang tersedia adalah statistik [negara] dan rs <wilayah>. Bagian yang didalam [] berarti tidak harus, dan <> adalah harus")
 
     switch (perintah) {
         case 'statistik': {
+            let negara = Interact.question("Masukkan negara yang ingin dicari: ") ?? "all";
             const l = Loading("Mencari data... Mohon tunggu").start();
             const hasil = await CovidScrapper.getHistoricalData(negara.length ? negara : 'all', '14').catch(e => e.toString());
             l.stop();
@@ -64,13 +65,14 @@
         }
 
         case "rs": {
-            const l = Loading(`Mencari rumah sakit di ${negara}`).start();
-            const hasil = await CovidScrapper.getHospital({location: negara, limit: 20});
+            let wilayah = Interact.question("Masukkan wilayah yang ingin dicari: ") ?? "";
+            const l = Loading(`Mencari rumah sakit di ${wilayah}`).start();
+            const hasil = await CovidScrapper.getHospital({location: wilayah, limit: 5000});
             l.stop();
-            if (!hasil || !hasil.length) return console.log("Maaf, Rumah sakit di daerah ${negara} tidak ditemukan");
+            if (!hasil || !hasil.length) return console.log(`Maaf, Rumah sakit di daerah ${wilayah} tidak ditemukan`);
 
             const kataKata = [
-                `Rumah Sakit di ${negara}`,
+                `Rumah Sakit di ${wilayah}`,
                 `Menampilkan ${hasil.length} rumah sakit teratas`,
                 ``,
                 ...(Utils.parseHospital(hasil))
